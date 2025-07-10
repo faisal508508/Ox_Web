@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Favorite Things - Simplified</title>
+    <style>
+        /* Basic Reset and Body Styling */
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f1f5f9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Container to center content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header Banner */
+        .header-banner {
+            position: relative;
+            height: 350px;
+            background-image: url('https://th.bing.com/th/id/R.7ee098aefa37039b5e95f854a69caa59?rik=aeQAGISGGCtc7g&pid=ImgRaw&r=0');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .header-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+        .banner-content {
+            position: relative; /* To appear above the overlay */
+            z-index: 1;
+        }
+
+        .banner-content h1 {
+            font-size: 3rem;
+            margin: 0;
+        }
+
+        .banner-content p {
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+
+        /* Section Styling */
+        .section {
+            margin-top: 4rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Grid for Cards */
+        .grid-container {
+            display: grid;
+            gap: 20px;
+        }
+
+        /* 6-column grid for highlights */
+        .grid-highlights {
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        }
+
+        /* 4-column grid for characters */
+        .grid-characters {
+             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+
+        /* 3-column grid for hobbies */
+        .grid-hobbies {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        /* General Card Styling */
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .card img {
+            width: 100%;
+            display: block;
+        }
+
+        .card-content {
+            padding: 15px;
+        }
+
+        .card h3 {
+            margin-top: 0;
+            font-size: 1.25rem;
+        }
+
+        .card p {
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        /* Specific Card Image Heights */
+        .highlight-card img {
+            height: 120px;
+            object-fit: cover;
+        }
+
+        .hobby-card img {
+             height: 200px;
+             object-fit: cover;
+        }
+
+        /* Character Card Specifics */
+        .character-card {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .character-card img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid #e2e8f0;
+            margin: 0 auto;
+        }
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 20%;
+    height: 20%;
+}
+.fit {
+    width: 200px;
+    height: 300px;
+    object-fit: fill;
+}
+.popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border: 2px solid #000;
+            z-index: 1000;
+            text-align: center;
+        }
+
+        /* Style for the overlay */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+ .coming-soon-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(20, 20, 20, 0.75); /* Dark, semi-transparent overlay */
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+            border-radius: 8px; /* Match the parent card's radius */
+        }
+
+    </style>
+</head>
+<body>
+
+    <header class="header-banner">
+        <div class="banner-content">
+            <h1>Welcome to my mind</h1>
+            <p>A collection of characters, hobbies, and things I love.</p>
+        </div>
+    </header>
+
+    <main class="container">
+            <img id="trigger-image" src="C:\Users\aldub\Downloads\ed3225962d695eadd188d0c5cf0a59e2-removebg-preview.png" alt="Click me" onclick="triggerFoundPopup()" style="cursor: pointer; width: 200px;" class="center">
+
+    <div class="overlay" id="overlay"></div>
+    <div class="popup" id="popup">
+        <h2>You found me !</h2>
+
+        <button onclick="hidePopup()">Close</button>
+    </div>
+        <section class="section">
+            <style>
+    .face {
+        position: relative; /* Changed to relative for better responsiveness */
+        width: 471px; /* Original width */
+        height: 192px; /* Original height */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-image: url('https://i.imgur.com/0OZar7n.jpeg');
+        background-size: cover; /* Ensure the image scales properly */
+        margin: 0 auto; /* Center the face horizontally */
+    }
+
+    .eyes {
+        position: relative;
+        top: -27px; /* Original positioning */
+        right: 110px; /* Original positioning */
+        display: flex;
+    }
+
+    .eyes .eye {
+        position: relative;
+        width: 10px; /* Original eye size */
+        height: 10px; /* Original eye size */
+        display: block;
+        background: white;
+        margin: 0 3.5px; /* Original spacing */
+        border-radius: 50%;
+    }
+
+    .eyes .eye::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        right: 0%;
+        transform: translate(-50%, -50%);
+        width: 10px; /* Original pupil size */
+        height: 10px; /* Original pupil size */
+        background: #66cc99;
+        border-radius: 50%;
+    }
+</style>
+
+<div class="face">
+    <div class="eyes">
+        <div class="eye"></div>
+        <div class="eye"></div>
+    </div>
+</div>
+
+<script>
+    document.querySelector("body").addEventListener("mousemove", eyeball);
+    function eyeball() {
+        var eye = document.querySelectorAll(".eye");
+        eye.forEach(function (eye) {
+            let x = eye.getBoundingClientRect().left + eye.clientWidth / 2;
+            let y = eye.getBoundingClientRect().top + eye.clientHeight / 2;
+            let radian = Math.atan2(event.pageX - x, event.pageY - y);
+            let rot = radian * (180 / Math.PI) * -1 + 270;
+            eye.style.transform = "rotate(" + rot + "deg)";
+        });
+    }
+</script>
+            <h2 class="section-title">Experiences</h2>
+            <div class="grid-container grid-highlights">
+               <a href="https://sites.google.com/view/3rbgamejam/home"> <div class="card highlight-card">
+                    <img src="C:\Users\aldub\Downloads\IMG-20250416-WA00101.jpg" alt="Topic 1">
+                    <div class="card-content">
+                        <h3>3RB GameJam</h3>
+                        <p>Shaping future game developers</p>
+                    </div>
+                </div>        </a>
+                <div class="card highlight-card">
+                    <img src="https://vectorseek.com/wp-content/uploads/2023/11/Sahara-Net-Logo-Vector.svg-.png" class="fit" alt="Topic 2">
+                    <div class="card-content">
+                        <h3>Sa7ara net Internship</h3>
+                        <p>Visions of the future.</p>
+                    </div>
+                </div>
+                <a href="https://www.student-wiki.help/">
+                <div class="card highlight-card">
+                    <img src="C:\Users\aldub\Downloads\StudentWiki-ezgif.com-loop-count.gif" alt="Topic 3">
+                    <div class="card-content">
+                        <h3>Student Wiki</h3>
+                        <p>My gift to the community</p>
+                    </div>
+                </div>
+                </a>
+                <div class="card highlight-card">
+                    <img src="C:\Users\aldub\Downloads\IMG_5340.JPG" alt="Topic 4">
+                    <div class="card-content">
+                        <h3>Mawhiba Stem classes</h3>
+                        <p>Where I found my love for STEM</p>
+                    </div>
+                </div>
+                <div class="card highlight-card">
+                    <img src="https://placehold.co/400x300/a78bfa/ffffff?text=Topic+5" alt="Topic 5">
+                    <div class="card-content">
+                        <h3>Science and robotics club president</h3>
+                        <p>STEM will always be a part of me</p>
+                    </div>
+                </div>
+                <div class="card highlight-card">
+                    <img src="https://placehold.co/400x300/f472b6/ffffff?text=Topic+6" alt="Topic 6">
+                    <div class="card-content">
+                        <h3>OXMEDICA</h3>
+                        <p>coming soon</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Favorite Characters</h2>
+            <div class="grid-container grid-characters">
+                <a href="https://www.dndbeyond.com/characters/147655995"><div class="card character-card">
+                    <img src="C:\Users\aldub\Downloads\Illustration19.png" alt="Character A">
+                    <div class="card-content">
+                        <h3>Theo</h3>
+                        <p>My first DND OC</p>
+                    </div>
+                </div>       </a>
+                <div class="card character-card">
+                    <img src="https://tse2.mm.bing.net/th/id/OIP.-Z_vb0H1R5gKyD_Cv2A33AHaHa?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Character B">
+                    <div class="card-content">
+                        <h3>Micheal holden</h3>
+                        <p>Most relatable character</p>
+                    </div>
+                </div>
+                <div class="card character-card">
+                    <img src="https://i.pinimg.com/474x/68/52/21/68522169378263e5b86f5db51149a982.jpg?nii=t" alt="Character C">
+                    <div class="card-content">
+                        <h3>Futaba</h3>
+                        <p>shes js real idk</p>
+                    </div>
+                </div>
+                <div class="card character-card">
+                    <img src="https://th.bing.com/th/id/R.12e4d544650913f31519b01b9c3e6622?rik=bF74%2frriGyVq4Q&pid=ImgRaw&r=0" alt="Character D">
+                    <div class="card-content">
+                        <h3>Toro Inoue</h3>
+                        <p>Where did he go?? can you find him!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Favorite Hobbies</h2>
+            <div class="grid-container grid-hobbies">
+                <div class="card hobby-card">
+                    <img src="C:\Users\aldub\Downloads\IMG_1091 (1).jpg" alt="Baking">
+                    <div class="card-content">
+                        <h3>Baking</h3>
+                        <p>I find it really relaxing</p>
+                    </div>
+                </div>
+               <a href=https://steamcommunity.com/profiles/76561198802050672"> <div class="card hobby-card">
+                    <img src="https://static0.gamerantimages.com/wordpress/wp-content/uploads/2024/11/louis-in-metaphor-refantazio.jpg" alt="Video game">
+                    <div class="card-content">
+                        <h3>Video games</h3>
+                        <p>PLAY METAPHOR REFANTAZO</p>
+                    </div>
+                </div> </a>
+                <div class="card hobby-card">
+                    <img src="C:\Users\aldub\Downloads\Snapchat-1514177620.jpg" alt="Coffee">
+                    <div class="card-content">
+                        <h3>Drinking coffee</h3>
+                        <p>not really a hobby but i like drinking coffe! loyal to UMQ till the end of time</p>
+                    </div>
+                </div>
+            </div>
+            <div class="center" style="width: 25%">
+             <audio controls autoplay>
+    <source src="C:\Users\aldub\Downloads\videoplayback.ogg" type="audio/ogg">
+    <source src="C:\Users\aldub\Downloads\videoplayback.mp3" type="audio/mpeg">
+Your browser does not support the audio element.
+</audio>   </div>
+        </section>
+    </main>
+
+    <script>
+        // Get the elements for the popup and overlay
+        const overlay = document.getElementById('overlay');
+        const popup = document.getElementById('popup');
+
+        // Function to show the popup
+        function showPopup() {
+            if (overlay && popup) {
+                overlay.style.display = 'block';
+                popup.style.display = 'block';
+            }
+        }
+
+        // Function to hide the popup
+        function hidePopup() {
+            if (overlay && popup) {
+                overlay.style.display = 'none';
+                popup.style.display = 'none';
+            }
+        }
+
+        // Function to trigger the popup and change the image
+        function triggerFoundPopup() {
+            const triggerImage = document.getElementById('trigger-image');
+            if (triggerImage) {
+                // Change the image source to the "found" character (Toro Inoue)
+                triggerImage.src = 'https://media.stickerswiki.app/toroinoue/2488016.512.webp';
+            }
+            // Show the popup
+            showPopup();
+        }
+    </script>
+
+</body>
+</html>
