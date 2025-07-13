@@ -214,6 +214,7 @@
 
     <div class="overlay" id="overlay"></div>
     <div class="popup" id="popup">
+    <audio id="audio" src="cat.mp3"></audio>  
         <h2>You found me !</h2>
 
         <button onclick="hidePopup()">Close</button>
@@ -431,6 +432,8 @@ Your browser does not support the audio element.
             if (overlay && popup) {
                 overlay.style.display = 'block';
                 popup.style.display = 'block';
+                var audio = document.getElementById("audio");
+        audio.play();
             }
         }
 
